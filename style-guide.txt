@@ -1,0 +1,215 @@
+C++ Style Guide and Programming Guidelines
+
+Style Guide
+1.	All files begin with a neatly delimited comment header states:
+File name
+Author
+Date
+Program description
+
+For example:
+/*
+    * File: lab2.cpp
+    * Author: Jane Doe
+    * Date: 8/27/2011
+    * This program calculates miles per gallon based upon user inputs of miles 
+and gallons.
+*/
+
+2.	All programs have meaningful inline comments, enough so that if you looked at 
+the program six months from now, you would understand how it works. 
+Make sure you include units (e.g., kilometers or miles?). 
+
+Examples:
+a.	Bad:
+// total
+int total;
+
+b.	Better:
+// total amount of free space on the hard drive
+int total;
+
+c.	Best:
+// total free space on the formatted hard drive in 512-byte sectors
+int total;
+
+3.	Use meaningful variable names and the camelCase convention or use underscores to separate words. 
+Be consistent - choose one convention and stick with it. 
+
+Examples:
+a.	Bad:
+char mi;
+
+b.	Good:
+char middleInitial;
+or
+char middle_initial;
+
+4.	Curly braces: the first curly brace goes on the line it delimits and the ending one on a line by itself. 
+Or, each curly brace goes on a line by itself – both lined up with each other. 
+Be consistent - choose one convention and stick to it. 
+
+For example:
+for ( i = 0; i < 10; i++ ) {
+	// do stuff here
+}
+or
+for ( i = 0; i < 10; i++ ) 
+{
+	// do stuff here
+}
+
+5.	Use curly braces for clarity. Put opening and closing curly braces on separate lines. 
+Example: What does the code below do when x is 2.2? 
+(The code below is bad style and exemplifies why consistent indentation and curly braces are needed.)
+if ( x > 5 )
+	if ( y < 0 )
+		cout << “snap”;
+else
+		cout << “crackle”;
+
+6.	Indent meaningfully and consistently. 
+Line up curly braces with the first letter of the code they delimit 
+(see example above where code is indented misleadingly – which is bad!)
+int  main( )
+{ 
+	char answer;
+	if ( age >= 18 )
+	{
+	     cout <<  “Did you vote (y/n)? ”;
+	     cin >> answer;
+	} 
+}
+
+7.	Declare constants and use them throughout your code to improve code 
+readability and for easier updating. For example, if you find yourself 
+using the same literal value often, make it a constant. 
+Names should be uppercase with underscores separating words. 
+
+Examples:
+const int INVALID = -1;
+if ( entry = INVALID ) { 
+
+switch( month ) { 
+   case JANUARY: 
+
+const int MAX_STUDENTS = 26;
+double gradeAverages[MAX_STUDENTS];
+for( i = 0; i < MAX_STUDENTS; i++ )
+
+8.	All functions should have a comment header in the form of:
+/* functionName: brief description of what it does
+   * Parameters: none OR a list of parameters in the form of:
+   *		parameter: describe what it is
+   * Pre and/or post-conditions where appropriate
+   * Returns: nothing OR describe what the value returned means
+*/
+
+For example:
+/* mpg: calculates miles per gallon
+   Parameters:
+      miles miles driven
+	gallons gallons pumped into vehicle
+  Returns: number of miles driven using one gallon, miles per gallon
+*/
+
+/* lowercase lower cases all letters in C-string parameter
+   Parameters
+      s  C-string to lowercase, passed by reference
+   Post-condition the actual parameter for s has been changed so all alpha 
+      characters are lower case
+   Returns nothing
+*/
+
+/* readFile: reads data from a file into an array if Students
+   Parameters
+      input the input file
+      array the array of Students
+   Pre-condition file is already successfully open
+   Post-condition array contains data from file
+   Returns number of valid student data read into array
+*/
+
+
+
+Programming Guidelines:
+
+1.	Beware integer division! If you want a floating-point result, one 
+of your operands must be a double –use type casting if you need to. 
+
+For example:
+int i, sum;
+double average = static_cast<double>(sum) / i;
+
+Note: don’t get around this problem by declaring sum to be a double – 
+if sum is the sum of things that are integers, like the number of 
+students in this class, it should be an integer, too.
+
+2.	Minimize comparisons in if/else if/else control structures. 
+
+Example:
+a.	Inefficient:
+if ( grade <= 100 && grade > 92 )
+	letterGrade = ‘A’;
+else if ( grade <= 92 && grade > 82 )
+	letterGrade = ‘B’;
+else if ( grade <= 82 && grade > 72 )
+	letterGrade = ‘C’;
+else if ( grade <= 72 && grade > 64 )
+	letterGrade = ‘D’;
+else
+letterGrade = ‘F’;
+
+b.	Efficient:
+if ( grade < 65 )
+	letterGrade = ‘F’;
+else if ( grade < 73 )
+	letterGrade = ‘D’;
+else if ( grade < 83 )
+	letterGrade = ‘C’;
+else if ( grade < 93 )
+	letterGrade = ‘B’;
+else
+letterGrade = ‘A’;
+
+3.	Use the following format for a while loop:
+initialize loop control variable(s)
+while ( use loop control variable(s) in a Boolean statement ) {
+	do stuff
+	update all loop control variable(s)
+}
+
+4.	Don’t alter a for loop’s control variable(s) outside the loop construct. 
+
+Example:
+a.	Bad:
+for( i = 0; i < 10; i++ )
+{
+	… 
+	i += 2;  BAD!
+}
+
+b.	Good:
+for( i = 0; i < 10; i += 3 )
+
+5.	When using arrays, you often need to count how many valid elements are in 
+the array as you add elements, because you may not fill up the array. 
+Then, use that count in your loops that process the array elements.
+
+for( i = 0; i < numValidElementst; i++ ) {
+	// process array element i here
+}
+
+6.	When writing a function that processes an array, always have at least two 
+parameters: the array and the number of valid elements in the array. 
+
+For example:
+void sort( int array[ ], int numValidElements )
+
+7.	If you find yourself writing the same code in two or more different places – stop. 
+Put that code in a function instead. 
+
+8.	Open files in your code when you need them and close them immediately when you’re 
+done with them – don’t wait until the end of the program to close files unless necessary.
+
+9.	Always deallocate dynamically allocated memory.
